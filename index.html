@@ -109,9 +109,11 @@
   .save-menu.open { display: flex; }
   .bottom-bar { position: relative; z-index: 38; }
   .bottom-bar-inner { position: relative; padding: 6px 18px 0; }
+  .action-row { display: flex; justify-content: center; gap: 14px; }
   .app-footer { text-align: center; font-size: 12px; font-weight: 600; color: var(--text-dim); padding: 14px 18px calc(84px + env(safe-area-inset-bottom)); }
-  .bottom-bar .save-btn { width: 100%; height: 46px; font-size: 16px; box-shadow: 0 3px 8px rgba(46,127,193,0.35); }
-  .bottom-bar .save-menu { top: auto; bottom: calc(100% - 4px); left: 18px; right: 18px; width: auto; max-height: 70vh; overflow-y: auto; box-shadow: 0 -8px 28px rgba(0,0,0,0.16); }
+  .bottom-bar .bar-btn { width: 60px; height: 44px; padding: 0; border-radius: 12px; box-shadow: 0 3px 8px rgba(46,127,193,0.35); }
+  .bottom-bar .bar-btn:active { transform: translateY(1px); }
+  .bottom-bar .save-menu { top: auto; bottom: calc(100% - 4px); left: 50%; right: auto; transform: translateX(-50%); width: 270px; max-height: 70vh; overflow-y: auto; box-shadow: 0 -8px 28px rgba(0,0,0,0.16); }
   .save-menu-item.spinning svg { animation: syncSpin .6s linear; }
 
   .save-menu-item { display: flex; align-items: center; gap: 10px; text-align: left; padding: 11px 12px; border-radius: 10px; width: 100%; min-height: 44px; }
@@ -970,19 +972,22 @@
   <!-- Save button (end of page) -->
   <div class="bottom-bar">
     <div class="bottom-bar-inner">
-      <button class="save-btn" id="saveBtn" title="Save">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M17 21v-8H7v8M7 3v5h8" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path></svg>
-            <span>Save</span>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" style="margin-left:1px;"><path d="M6 15l6-6 6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          </button>
+      <div class="action-row">
+      <button class="save-btn bar-btn" id="saveBtn" title="Save" aria-label="Save">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M17 21v-8H7v8M7 3v5h8" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+      </button>
+      <button class="save-btn bar-btn" id="printChecklistBtn" title="Print PDF" aria-label="Print PDF">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"></path><path d="M14 2v6h6" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"></path><rect x="1.5" y="11.5" width="17" height="8" rx="1.8" fill="#e03131"></rect><text x="10" y="17.6" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-size="6.4" font-weight="900" fill="#fff" letter-spacing="0.2">PDF</text></svg>
+      </button>
+      </div>
       <div class="save-menu" id="saveMenu">
             <button class="save-menu-item" id="saveJsonOption">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="#3d4351" stroke-width="1.7" stroke-linejoin="round"></path><path d="M17 21v-8H7v8M7 3v5h8" stroke="#3d4351" stroke-width="1.7" stroke-linejoin="round"></path></svg>
               <div><div class="save-menu-title">Save progress</div><div class="save-menu-sub">Full app copy with your current tasks</div></div>
             </button>
-            <button class="save-menu-item" id="printChecklistBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2" stroke="#3d4351" stroke-width="2"></rect><path d="M5.3 7l1.5 1.5 2.6-3" stroke="#3d4351" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><rect x="3.5" y="13.5" width="7" height="7" rx="1.2" stroke="#3d4351" stroke-width="2"></rect><path d="M14 7h7M14 17h7" stroke="#3d4351" stroke-width="2" stroke-linecap="round"></path></svg>
-              <div><div class="save-menu-title">Print Checklist</div><div class="save-menu-sub">Open tasks by location, with check boxes</div></div>
+            <button class="save-menu-item" id="saveJsonFileOption">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#3d4351" stroke-width="1.7" stroke-linejoin="round"></path><path d="M14 2v6h6" stroke="#3d4351" stroke-width="1.7" stroke-linejoin="round"></path><path d="M10 12.5c-1 0-1 .8-1 1.5s-.5 1-1 1c.5 0 1 .3 1 1s0 1.5 1 1.5M14 12.5c1 0 1 .8 1 1.5s.5 1 1 1c-.5 0-1 .3-1 1s0 1.5-1 1.5" stroke="#3d4351" stroke-width="1.3" stroke-linecap="round"></path></svg>
+              <div><div class="save-menu-title">Save as JSON</div><div class="save-menu-sub">Data file of all tasks, including photos</div></div>
             </button>
             <button class="save-menu-item" id="syncNowBtn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 11A8 8 0 105.6 15.5M4 4v5h5M4 13a8 8 0 0014.4 4.5M20 20v-5h-5" stroke="#3d4351" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -2204,6 +2209,27 @@
     }
   });
 
+
+  // Save as JSON — a plain data file of every task (photos included) for backup
+  document.getElementById('saveJsonFileOption').addEventListener('click', async () => {
+    saveMenu.classList.remove('open');
+    saveTasks();
+    try {
+      const data = {
+        app: 'Household Tasks',
+        exportedAt: new Date().toISOString(),
+        taskCount: state.tasks.length,
+        customRooms: state.customRooms || [],
+        tasks: state.tasks,
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const ok = await shareOrDownload(blob, `household-tasks-${todayStamp()}.json`, 'application/json');
+      if (ok) showToast('JSON saved');
+    } catch (err) {
+      console.error('JSON export failed', err);
+      showToast('JSON export failed — try again');
+    }
+  });
 
   // Print Checklist — PDF of open tasks grouped by location, with an empty
   // check box in front of each one so it can be ticked off by hand.
